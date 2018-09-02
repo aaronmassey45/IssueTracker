@@ -1,5 +1,14 @@
+require('./config/config');
+
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  process.env.MONGO_URI,
+  { useNewUrlParser: true }
+);
 
 const app = express();
 app.use(bodyParser.json());
