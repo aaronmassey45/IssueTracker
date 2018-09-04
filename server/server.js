@@ -64,6 +64,26 @@ app.put('/api/issues/:projectName', async (req, res) => {
   }
 });
 
+app.delete('/api/issues/:projectName', async (req, res) => {
+  const { projectName } = req.params;
+  const { id } = req.body;
+
+  if (!id) return res.send('_id error');
+
+  try {
+    const deleted = await Issue.findOneAndDelete({
+      project: projectName,
+      _id: id,
+    });
+
+    if (!deleted) throw new Error();
+
+    return res.send(`deleted ${id}`);
+  } catch (error) {
+    return res.send(`could not delete ${id}`);
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
