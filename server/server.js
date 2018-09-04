@@ -3,6 +3,8 @@ require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const pick = require('./utils/pick');
+const isEmpty = require('./utils/isEmpty');
 
 require('./models/issue');
 const Issue = mongoose.model('issue');
@@ -16,24 +18,18 @@ mongoose.connect(
 const app = express();
 app.use(bodyParser.json());
 
+const issueKeys = [
+  'issue_title',
+  'issue_text',
+  'created_by',
+  'assigned_to',
+  'status_text',
+];
+
 app.post('/api/issues/:projectName', async (req, res) => {
   const { projectName } = req.params;
 
-  const paths = [
-    'issue_title',
-    'issue_text',
-    'created_by',
-    'assigned_to',
-    'status_text',
-  ];
-
-  const body = {};
-
-  Object.keys(req.body).forEach(key => {
-    if (paths.includes(key)) {
-      body[key] = req.body[key];
-    }
-  });
+  const body = pick(req.body, issueKeys);
 
   body.project = projectName;
 
@@ -41,6 +37,31 @@ app.post('/api/issues/:projectName', async (req, res) => {
   await issue.save();
 
   res.send(issue);
+});
+
+app.put('/api/issues/:projectName', async (req, res) => {
+  const { projectName } = req.params;
+  const { id } = req.body;
+
+  try {
+    const issueToUpdate = await Issue.findOne({
+      project: projectName,
+      _id: id,
+    });
+    if (!issueToUpdate) throw new Error();
+
+    const updates = pick(req.body, issueKeys);
+    if (isEmpty(updates)) return res.send('no updated field sent');
+
+    Object.keys(updates).forEach(key => {
+      issueToUpdate[key] = updates[key];
+    });
+    issueToUpdate.updated_on = Date.now();
+    await issueToUpdate.save();
+    res.send('successfully updated');
+  } catch (error) {
+    res.send(`could not update ${id}`);
+  }
 });
 
 const PORT = process.env.PORT || 3001;
