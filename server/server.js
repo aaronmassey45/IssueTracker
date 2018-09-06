@@ -84,6 +84,18 @@ app.delete('/api/issues/:projectName', async (req, res) => {
   }
 });
 
+app.get('/api/issues/:projectName', async (req, res) => {
+  const { projectName } = req.params;
+  const queryKeys = [...issueKeys, 'open', 'updated_on', 'created_on', '_id'];
+  const queryParams = pick(req.query, queryKeys);
+
+  const issues = await Issue.find({
+    project: projectName,
+    ...queryParams,
+  });
+  return res.send(issues);
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
