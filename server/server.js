@@ -50,7 +50,7 @@ app.put('/api/issues/:projectName', async (req, res) => {
     });
     if (!issueToUpdate) throw new Error();
 
-    const updates = pick(req.body, issueKeys);
+    const updates = pick(req.body, [...issueKeys, 'open']);
     if (isEmpty(updates)) return res.send('no updated field sent');
 
     Object.keys(updates).forEach(key => {
