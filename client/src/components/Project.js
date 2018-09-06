@@ -28,9 +28,21 @@ export default class Project extends Component {
     this.getProjectData();
   };
 
+  deleteIssue = async id => {
+    await axios.delete(`/api/issues/${this.props.match.params.projectName}`, {
+      data: { id },
+    });
+    this.getProjectData();
+  };
+
   renderIssues = () => {
     return this.state.issues.map(issue => (
-      <Issue key={issue._id} {...issue} closeIssue={this.closeIssue} />
+      <Issue
+        key={issue._id}
+        {...issue}
+        closeIssue={this.closeIssue}
+        deleteIssue={this.deleteIssue}
+      />
     ));
   };
 

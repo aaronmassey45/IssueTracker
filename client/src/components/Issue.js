@@ -11,6 +11,7 @@ export default ({
   created_by,
   updated_on,
   closeIssue,
+  deleteIssue,
 }) => {
   return (
     <div className={`issue ${open ? 'open' : 'closed'}`}>
@@ -31,7 +32,9 @@ export default ({
         <span className="clickable" onClick={() => closeIssue(_id)}>
           close?
         </span>{' '}
-        <span className="clickable">delete?</span>
+        <span className="clickable" onClick={() => deleteIssue(_id)}>
+          delete?
+        </span>
       </p>
     </div>
   );
