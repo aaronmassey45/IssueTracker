@@ -21,6 +21,7 @@ export default ({
       </h3>
       <br />
       <div>{issue_text}</div>
+      <div>{status_text}</div>
       <br />
       <p className="small-text">
         <b>Created by:</b> {created_by} <b>Assigned to:</b> {assigned_to}
