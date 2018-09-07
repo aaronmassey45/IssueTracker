@@ -1,33 +1,35 @@
 import React, { Component } from 'react';
 
+const INITIAL_STATE = {
+  issue_title: {
+    value: '',
+    placeholder: '*Title',
+    required: true,
+  },
+  issue_text: {
+    value: '',
+    placeholder: '*Text',
+    required: true,
+  },
+  created_by: {
+    value: '',
+    placeholder: '*Created by',
+    required: true,
+  },
+  assigned_to: {
+    value: '',
+    placeholder: 'Assigned to',
+    required: false,
+  },
+  status_text: {
+    value: '',
+    placeholder: 'Status text',
+    required: false,
+  },
+};
+
 export default class IssueForm extends Component {
-  state = {
-    issue_title: {
-      value: '',
-      placeholder: '*Title',
-      required: true,
-    },
-    issue_text: {
-      value: '',
-      placeholder: '*Text',
-      required: true,
-    },
-    created_by: {
-      value: '',
-      placeholder: '*Created by',
-      required: true,
-    },
-    assigned_to: {
-      value: '',
-      placeholder: 'Assigned to',
-      required: false,
-    },
-    status_text: {
-      value: '',
-      placeholder: 'Status text',
-      required: false,
-    },
-  };
+  state = { ...INITIAL_STATE };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -41,6 +43,7 @@ export default class IssueForm extends Component {
     };
 
     this.props.submitNewIssue(values);
+    this.setState({ ...INITIAL_STATE });
   };
 
   handleChange = (e, issue) => {
