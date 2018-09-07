@@ -4,25 +4,10 @@ import axios from 'axios';
 import Issue from './Issue';
 import IssueForm from './IssueForm';
 
-export const { Provider, Consumer } = React.createContext();
-
 export default class Project extends Component {
-  constructor(props) {
-    super(props);
-
-    this.submitNewIssue = async values => {
-      console.log('called');
-      await axios.post(`/api/issues/${props.match.params.projectName}`, {
-        ...values,
-      });
-      this.getProjectData();
-    };
-
-    this.state = {
-      issues: [],
-      submitNewIssue: this.submitNewIssue,
-    };
-  }
+  state = {
+    issues: [],
+  };
 
   componentDidMount = () => {
     this.getProjectData();
@@ -51,6 +36,14 @@ export default class Project extends Component {
     this.getProjectData();
   };
 
+  submitNewIssue = async values => {
+    console.log('called');
+    await axios.post(`/api/issues/${this.props.match.params.projectName}`, {
+      ...values,
+    });
+    this.getProjectData();
+  };
+
   renderIssues = () => {
     return this.state.issues.map(issue => (
       <Issue
@@ -64,13 +57,11 @@ export default class Project extends Component {
 
   render() {
     return (
-      <Provider value={this.state}>
-        <div className="container">
-          <h1>All issues for: {this.props.match.params.projectName}</h1>
-          <IssueForm />
-          {!this.state.issues ? <h3>Loading...</h3> : this.renderIssues()}
-        </div>
-      </Provider>
+      <div className="container">
+        <h1>All issues for: {this.props.match.params.projectName}</h1>
+        <IssueForm submitNewIssue={this.submitNewIssue} />
+        {!this.state.issues ? <h3>Loading...</h3> : this.renderIssues()}
+      </div>
     );
   }
 }

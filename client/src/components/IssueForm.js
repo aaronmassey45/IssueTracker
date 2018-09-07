@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Consumer } from './Project';
-
 export default class IssueForm extends Component {
   state = {
     issue_title: {
@@ -31,7 +29,7 @@ export default class IssueForm extends Component {
     },
   };
 
-  handleSubmit = (e, submitNewIssue) => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const values = {
@@ -42,7 +40,7 @@ export default class IssueForm extends Component {
       assigned_to: this.state.assigned_to.value,
     };
 
-    submitNewIssue(values);
+    this.props.submitNewIssue(values);
   };
 
   handleChange = (e, issue) => {
@@ -70,17 +68,10 @@ export default class IssueForm extends Component {
 
   render() {
     return (
-      <Consumer>
-        {({ submitNewIssue }) => (
-          <form
-            onSubmit={e => this.handleSubmit(e, submitNewIssue)}
-            className="new-issue"
-          >
-            {this.renderInputs()}
-            <input type="submit" value="Submit Issue!" className="submitBtn" />
-          </form>
-        )}
-      </Consumer>
+      <form onSubmit={this.handleSubmit} className="new-issue">
+        {this.renderInputs()}
+        <input type="submit" value="Submit Issue!" className="submitBtn" />
+      </form>
     );
   }
 }
