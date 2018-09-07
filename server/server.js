@@ -3,6 +3,8 @@ require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+
 const pick = require('./utils/pick');
 const isEmpty = require('./utils/isEmpty');
 
@@ -16,6 +18,8 @@ mongoose.connect(
 );
 
 const app = express();
+app.use(helmet());
+app.use(helmet.hidePoweredBy({ setTo: 'Ya mama' }));
 app.use(bodyParser.json());
 
 const issueKeys = [
