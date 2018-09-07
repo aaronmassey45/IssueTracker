@@ -37,7 +37,6 @@ export default class Project extends Component {
   };
 
   submitNewIssue = async values => {
-    console.log('called');
     await axios.post(`/api/issues/${this.props.match.params.projectName}`, {
       ...values,
     });
