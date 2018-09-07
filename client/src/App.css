@@ -25,7 +25,7 @@
   text-decoration: underline;
 }
 
-.homepage ul {
+ul {
   list-style-type: none;
 }
 
@@ -39,4 +39,26 @@
 
 .closed {
   background-color: lightgrey;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  margin-bottom: 15px;
+}
+
+.navbar li {
+  float: left;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  background-color: #111;
 }
