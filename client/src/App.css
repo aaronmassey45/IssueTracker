@@ -25,6 +25,18 @@
   text-decoration: underline;
 }
 
+.homepage ul {
+  list-style-type: none;
+}
+
+.homepage .tech {
+  margin-top: 15px;
+}
+
+.homepage .tech ul li {
+  margin: 5px 0;
+}
+
 .closed {
   background-color: lightgrey;
 }
