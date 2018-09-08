@@ -30,12 +30,12 @@ const issueKeys = [
   'status_text',
 ];
 
-app.post('/api/issues/:projectName', async (req, res) => {
-  const { projectName } = req.params;
+app.post('/api/issues/:project', async (req, res) => {
+  const { project } = req.params;
 
   const body = pick(req.body, issueKeys);
 
-  body.project = projectName;
+  body.project = project;
 
   const issue = new Issue({ ...body });
   await issue.save();
@@ -43,13 +43,13 @@ app.post('/api/issues/:projectName', async (req, res) => {
   res.send(issue);
 });
 
-app.put('/api/issues/:projectName', async (req, res) => {
-  const { projectName } = req.params;
+app.put('/api/issues/:project', async (req, res) => {
+  const { project } = req.params;
   const { id } = req.body;
 
   try {
     const issueToUpdate = await Issue.findOne({
-      project: projectName,
+      project,
       _id: id,
     });
     if (!issueToUpdate) throw new Error();
@@ -68,15 +68,15 @@ app.put('/api/issues/:projectName', async (req, res) => {
   }
 });
 
-app.delete('/api/issues/:projectName', async (req, res) => {
-  const { projectName } = req.params;
+app.delete('/api/issues/:project', async (req, res) => {
+  const { project } = req.params;
   const { id } = req.body;
 
   if (!id) return res.send('_id error');
 
   try {
     const deleted = await Issue.findOneAndDelete({
-      project: projectName,
+      project,
       _id: id,
     });
 
@@ -88,13 +88,13 @@ app.delete('/api/issues/:projectName', async (req, res) => {
   }
 });
 
-app.get('/api/issues/:projectName', async (req, res) => {
-  const { projectName } = req.params;
+app.get('/api/issues/:project', async (req, res) => {
+  const { project } = req.params;
   const queryKeys = [...issueKeys, 'open', 'updated_on', 'created_on', '_id'];
   const queryParams = pick(req.query, queryKeys);
 
   const issues = await Issue.find({
-    project: projectName,
+    project,
     ...queryParams,
   });
   return res.send(issues);
@@ -102,5 +102,5 @@ app.get('/api/issues/:projectName', async (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.info(`Listening on port ${PORT}`);
 });
