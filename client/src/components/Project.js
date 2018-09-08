@@ -7,6 +7,7 @@ import IssueForm from './IssueForm';
 export default class Project extends Component {
   state = {
     issues: [],
+    loading: true,
   };
 
   componentDidMount = () => {
@@ -18,7 +19,7 @@ export default class Project extends Component {
       `/api/issues/${this.props.match.params.projectName}`
     );
     const issues = res.data;
-    this.setState({ issues });
+    this.setState({ issues, loading: false });
   };
 
   closeIssue = async id => {
@@ -55,11 +56,18 @@ export default class Project extends Component {
   };
 
   render() {
+    const { loading, issues } = this.state;
     return (
       <div className="container">
         <h1>All issues for: {this.props.match.params.projectName}</h1>
         <IssueForm submitNewIssue={this.submitNewIssue} />
-        {!this.state.issues ? <h3>Loading...</h3> : this.renderIssues()}
+        <hr />
+        {loading && <h3>Loading...</h3>}
+        {!loading && issues.length === 0 ? (
+          <h1>There are no issues for this project! Submit a new one!</h1>
+        ) : (
+          this.renderIssues()
+        )}
       </div>
     );
   }
