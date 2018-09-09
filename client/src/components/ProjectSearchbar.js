@@ -20,9 +20,9 @@ class ProjectSearch extends Component {
           type="text"
           value={this.state.searchTerm}
           onChange={this.handleChange}
-          placeholder="Search for a issue!"
+          placeholder="Search for a project...."
         />
-        <button type="submit">Submit</button>
+        <input type="submit" value="Search" />
       </form>
     );
   }
