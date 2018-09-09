@@ -40,49 +40,77 @@ describe('Functional its', function(done) {
         });
     });
 
-    it('Required fields filled in', function(done) {});
-
-    it('Missing required fields', function(done) {});
-  });
-
-  describe('PUT /api/issues/{project} => text', function() {
-    it('No body', function(done) {});
-
-    it('One field to update', function(done) {});
-
-    it('Multiple fields to update', function(done) {});
-  });
-
-  describe('GET /api/issues/{project} => Array of objects with issue data', function() {
-    it('No filter', function(done) {
+    it('should have the required fields filled in', function(done) {
       chai
         .request(server)
-        .get('/api/issues/test')
-        .query({})
+        .post('/api/issues/test')
+        .send({
+          issue_title: 'Required',
+          issue_text: 'Required fields only',
+          created_by: 'Tester',
+        })
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.isArray(res.body);
-          assert.property(res.body[0], 'issue_title');
-          assert.property(res.body[0], 'issue_text');
-          assert.property(res.body[0], 'created_on');
-          assert.property(res.body[0], 'updated_on');
-          assert.property(res.body[0], 'created_by');
-          assert.property(res.body[0], 'assigned_to');
-          assert.property(res.body[0], 'open');
-          assert.property(res.body[0], 'status_text');
-          assert.property(res.body[0], '_id');
+          assert.equal(res.body.issue_title, 'Required');
+          assert.equal(res.body.issue_text, 'Required fields only');
+          assert.equal(res.body.created_by, 'Tester');
+          assert.equal(res.body.assigned_to, null);
+          assert.equal(res.body.status_text, null);
           done();
         });
     });
 
-    it('One filter', function(done) {});
-
-    it('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {});
+    it('Missing required fields', function(done) {
+      chai
+        .request(server)
+        .post('/api/issues/test')
+        .send({})
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.isNotNull(res.body.errors, 'Fields are missing');
+          done();
+        });
+    });
   });
 
-  describe('DELETE /api/issues/{project} => text', function() {
-    it('No _id', function(done) {});
+  // describe('PUT /api/issues/{project} => text', function() {
+  //   it('No body', function(done) {});
 
-    it('Valid _id', function(done) {});
-  });
+  //   it('One field to update', function(done) {});
+
+  //   it('Multiple fields to update', function(done) {});
+  // });
+
+  // describe('GET /api/issues/{project} => Array of objects with issue data', function() {
+  //   it('No filter', function(done) {
+  //     chai
+  //       .request(server)
+  //       .get('/api/issues/test')
+  //       .query({})
+  //       .end(function(err, res) {
+  //         assert.equal(res.status, 200);
+  //         assert.isArray(res.body);
+  //         assert.property(res.body[0], 'issue_title');
+  //         assert.property(res.body[0], 'issue_text');
+  //         assert.property(res.body[0], 'created_on');
+  //         assert.property(res.body[0], 'updated_on');
+  //         assert.property(res.body[0], 'created_by');
+  //         assert.property(res.body[0], 'assigned_to');
+  //         assert.property(res.body[0], 'open');
+  //         assert.property(res.body[0], 'status_text');
+  //         assert.property(res.body[0], '_id');
+  //         done();
+  //       });
+  //   });
+
+  //   it('One filter', function(done) {});
+
+  //   it('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {});
+  // });
+
+  // describe('DELETE /api/issues/{project} => text', function() {
+  //   it('No _id', function(done) {});
+
+  //   it('Valid _id', function(done) {});
+  // });
 });
