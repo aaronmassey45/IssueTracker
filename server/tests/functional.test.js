@@ -13,7 +13,9 @@ var server = require('../server');
 
 chai.use(chaiHttp);
 
-describe('Functional its', function(done) {
+describe('Functional tests', function(done) {
+  let id1, id2;
+
   describe('POST /api/issues/{project} => object with issue data', function() {
     it('should have every field filled in', function(done) {
       chai
@@ -27,6 +29,7 @@ describe('Functional its', function(done) {
           status_text: 'In QA',
         })
         .end(function(err, res) {
+          id1 = res.body._id;
           assert.equal(res.status, 200);
           assert.equal(res.body.issue_title, 'Title');
           assert.equal(res.body.issue_text, 'text');
@@ -50,6 +53,7 @@ describe('Functional its', function(done) {
           created_by: 'Tester',
         })
         .end(function(err, res) {
+          id2 = res.body._id;
           assert.equal(res.status, 200);
           assert.equal(res.body.issue_title, 'Required');
           assert.equal(res.body.issue_text, 'Required fields only');
@@ -73,13 +77,48 @@ describe('Functional its', function(done) {
     });
   });
 
-  // describe('PUT /api/issues/{project} => text', function() {
-  //   it('No body', function(done) {});
+  describe('PUT /api/issues/{project} => text', function() {
+    it('No body', function(done) {
+      chai
+        .request(server)
+        .put('/api/issues/test')
+        .send({})
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'could not update undefined');
+          done();
+        });
+    });
 
-  //   it('One field to update', function(done) {});
+    it('One field to update', function(done) {
+      chai
+        .request(server)
+        .put('/api/issues/test')
+        .send({ id: id1, open: false })
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'successfully updated');
+          done();
+        });
+    });
 
-  //   it('Multiple fields to update', function(done) {});
-  // });
+    it('Multiple fields to update', function(done) {
+      chai
+        .request(server)
+        .put('/api/issues/test')
+        .send({
+          id: id1,
+          open: false,
+          assigned_to: 'Tommy',
+          status_text: 'Boogie',
+        })
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'successfully updated');
+          done();
+        });
+    });
+  });
 
   // describe('GET /api/issues/{project} => Array of objects with issue data', function() {
   //   it('No filter', function(done) {
