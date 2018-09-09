@@ -38,7 +38,11 @@ app.post('/api/issues/:project', async (req, res) => {
   body.project = project;
 
   const issue = new Issue({ ...body });
-  await issue.save();
+  try {
+    await issue.save();
+  } catch (error) {
+    return res.send(error);
+  }
 
   res.send(issue);
 });
