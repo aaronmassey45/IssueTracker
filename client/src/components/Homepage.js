@@ -22,7 +22,7 @@ export default () => {
         <ol>
           <li>Prevent cross site scripting(XSS attack).</li>
           <li>
-            I can POST{' '}
+            I can <b>POST</b>{' '}
             <code>
               /api/issues/
               {'{projectname}'}
@@ -41,7 +41,7 @@ export default () => {
             open, false for closed), and _id.
           </li>
           <li>
-            I can PUT{' '}
+            I can <b>PUT</b>{' '}
             <code>
               /api/issues/
               {'{projectname}'}
@@ -52,7 +52,7 @@ export default () => {
             return 'no updated field sent'.
           </li>
           <li>
-            I can DELETE{' '}
+            I can <b>DELETE</b>{' '}
             <code>
               /api/issues/
               {'{projectname}'}
@@ -62,7 +62,7 @@ export default () => {
             '+_id.
           </li>
           <li>
-            I can GET{' '}
+            I can <b>GET</b>{' '}
             <code>
               /api/issues/
               {'{projectname}'}
