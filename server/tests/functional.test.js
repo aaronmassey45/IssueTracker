@@ -175,4 +175,21 @@ describe('Functional tests', function(done) {
 
   //   it('Valid _id', function(done) {});
   // });
+
+  after('clear database', function(done) {
+    const agent = chai.request(server).keepOpen();
+
+    agent
+      .delete('/api/issues/test')
+      .send({ id: id1 })
+      .end(function(err, res) {
+        agent
+          .delete('/api/issues/test')
+          .send({ id: id2 })
+          .end(function() {
+            agent.close();
+            done();
+          });
+      });
+  });
 });
