@@ -107,7 +107,7 @@ describe('Functional tests', function(done) {
         .request(server)
         .put('/api/issues/test')
         .send({
-          id: id1,
+          id: id2,
           open: false,
           assigned_to: 'Tommy',
           status_text: 'Boogie',
@@ -120,32 +120,55 @@ describe('Functional tests', function(done) {
     });
   });
 
-  // describe('GET /api/issues/{project} => Array of objects with issue data', function() {
-  //   it('No filter', function(done) {
-  //     chai
-  //       .request(server)
-  //       .get('/api/issues/test')
-  //       .query({})
-  //       .end(function(err, res) {
-  //         assert.equal(res.status, 200);
-  //         assert.isArray(res.body);
-  //         assert.property(res.body[0], 'issue_title');
-  //         assert.property(res.body[0], 'issue_text');
-  //         assert.property(res.body[0], 'created_on');
-  //         assert.property(res.body[0], 'updated_on');
-  //         assert.property(res.body[0], 'created_by');
-  //         assert.property(res.body[0], 'assigned_to');
-  //         assert.property(res.body[0], 'open');
-  //         assert.property(res.body[0], 'status_text');
-  //         assert.property(res.body[0], '_id');
-  //         done();
-  //       });
-  //   });
+  describe('GET /api/issues/{project} => Array of objects with issue data', function() {
+    it('No filter', function(done) {
+      chai
+        .request(server)
+        .get('/api/issues/test')
+        .query({})
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.isArray(res.body);
+          assert.property(res.body[0], 'issue_title');
+          assert.property(res.body[0], 'issue_text');
+          assert.property(res.body[0], 'created_on');
+          assert.property(res.body[0], 'updated_on');
+          assert.property(res.body[0], 'created_by');
+          assert.property(res.body[0], 'assigned_to');
+          assert.property(res.body[0], 'open');
+          assert.property(res.body[0], 'status_text');
+          assert.property(res.body[0], '_id');
+          done();
+        });
+    });
 
-  //   it('One filter', function(done) {});
+    it('One filter', function(done) {
+      chai
+        .request(server)
+        .get('/api/issues/test?assigned_to=Tommy')
+        .end(function(err, res) {
+          assert.equal(res.body[0]._id, id2);
+          assert.equal(res.body[0].assigned_to, 'Tommy');
+          done();
+        });
+    });
 
-  //   it('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {});
-  // });
+    it('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
+      chai
+        .request(server)
+        .get(
+          '/api/issues/test?assigned_to=Tommy&created_by=Tester&open=false&status_text=Boogie'
+        )
+        .end(function(err, res) {
+          assert.equal(res.body[0]._id, id2);
+          assert.equal(res.body[0].assigned_to, 'Tommy');
+          assert.equal(res.body[0].created_by, 'Tester');
+          assert.equal(res.body[0].open, false);
+          assert.equal(res.body[0].status_text, 'Boogie');
+          done();
+        });
+    });
+  });
 
   // describe('DELETE /api/issues/{project} => text', function() {
   //   it('No _id', function(done) {});
