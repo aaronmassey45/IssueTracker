@@ -170,26 +170,48 @@ describe('Functional tests', function(done) {
     });
   });
 
-  // describe('DELETE /api/issues/{project} => text', function() {
-  //   it('No _id', function(done) {});
+  describe('DELETE /api/issues/{project} => text', function() {
+    it('No _id', function(done) {
+      chai
+        .request(server)
+        .delete('/api/issues/test')
+        .send({})
+        .end(function(err, res) {
+          assert.equal(res.text, '_id error');
+          done();
+        });
+    });
 
-  //   it('Valid _id', function(done) {});
-  // });
+    it('Valid _id', function(done) {
+      const agent = chai.request(server).keepOpen();
 
-  after('clear database', function(done) {
-    const agent = chai.request(server).keepOpen();
+      agent
+        .delete('/api/issues/test')
+        .send({ id: id1 })
+        .end(function(err, res) {
+          assert.equal(res.text, `deleted ${id1}`);
 
-    agent
-      .delete('/api/issues/test')
-      .send({ id: id1 })
-      .end(function(err, res) {
-        agent
-          .delete('/api/issues/test')
-          .send({ id: id2 })
-          .end(function() {
-            agent.close();
-            done();
-          });
-      });
+          agent
+            .delete('/api/issues/test')
+            .send({ id: id2 })
+            .end(function(err, res) {
+              assert.equal(res.text, `deleted ${id2}`);
+              agent.close();
+              done();
+            });
+        });
+    });
+
+    it('Invalid _id', function(done) {
+      const id3 = 123456789;
+      chai
+        .request(server)
+        .delete('/api/issues/test')
+        .send({ id: id3 })
+        .end(function(err, res) {
+          assert.equal(res.text, `could not delete ${id3}`);
+          done();
+        });
+    });
   });
 });
