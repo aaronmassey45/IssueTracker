@@ -28,6 +28,7 @@ const IssueSchema = new Schema({
   },
   updated_on: {
     type: Date,
+    default: null,
   },
   open: {
     type: Boolean,
