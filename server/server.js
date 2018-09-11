@@ -104,6 +104,15 @@ app.get('/api/issues/:project', async (req, res) => {
   return res.send(issues);
 });
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.info(`Listening on port ${PORT}`);
