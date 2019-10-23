@@ -1,11 +1,9 @@
 {
-  "name": "IssueTracker",
+  "name": "issue-tracker",
   "version": "1.0.0",
   "description": "freeCodeCamp Info Security & QA project",
   "main": "index.js",
-  "author": [
-    "Aaron Massey"
-  ],
+  "author": "Aaron Massey",
   "license": "MIT",
   "scripts": {
     "run-client": "npm run start --prefix client",
