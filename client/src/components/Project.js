@@ -17,7 +17,7 @@ const Project = () => {
 
   useEffect(() => {
     getProjectData();
-  }, []);
+  }, [getProjectData]);
 
   return (
     <div className="container">
