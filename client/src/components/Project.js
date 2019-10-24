@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Issue from './Issue';
-import IssueForm from './IssueForm';
+import Issue from 'components/Issue';
+import IssueForm from 'components/issue-form';
 
 export default class Project extends Component {
   state = {
