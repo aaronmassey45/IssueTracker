@@ -1,31 +1,32 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-class ProjectSearch extends Component {
-  state = { searchTerm: '' };
+const ProjectSearch = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const history = useHistory();
 
-  handleChange = e => {
-    this.setState({ searchTerm: e.target.value });
+  const search = () => {
+    history.push(`/issues/${searchTerm}`);
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.history.push(`/issues/${this.state.searchTerm}`);
+  const searchOnEnterPress = e => {
+    if (e.key === 'Enter') {
+      search();
+    }
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          value={this.state.searchTerm}
-          onChange={this.handleChange}
-          placeholder="Search for a project...."
-        />
-        <input type="submit" value="Search" />
-      </form>
-    );
-  }
-}
+  return (
+    <>
+      <input
+        onChange={e => setSearchTerm(e.target.value)}
+        onKeyPress={searchOnEnterPress}
+        placeholder="Search for a project...."
+        type="text"
+        value={searchTerm}
+      />
+      <button onClick={search}>Search</button>
+    </>
+  );
+};
 
-export default withRouter(ProjectSearch);
+export default ProjectSearch;
