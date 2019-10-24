@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 const useAPI = () => {
@@ -7,12 +7,12 @@ const useAPI = () => {
   const [loading, setLoading] = useState(false);
   const { projectName } = useParams();
 
-  const getProjectData = async () => {
+  const getProjectData = useCallback(async () => {
     setLoading(true);
     const res = await axios.get(`/api/issues/${projectName}`);
     setLoading(false);
     setIssues(res.data);
-  };
+  }, [projectName]);
 
   const closeIssue = async id => {
     await axios.put(`/api/issues/${projectName}`, {
