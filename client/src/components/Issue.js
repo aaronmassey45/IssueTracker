@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({
+const Issue = ({
   assigned_to,
   status_text,
   created_on,
@@ -40,3 +40,5 @@ export default ({
     </div>
   );
 };
+
+export default Issue;
