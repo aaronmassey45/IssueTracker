@@ -1,6 +1,15 @@
-@media only screen and (max-width: 992px) {
-  nav .brand-logo {
-    left: unset;
-    transform: unset;
+.sidenav {
+  li > a {
+    color: white;
+  }
+
+  &-trigger {
+    background: transparent;
+    border: none;
+    color: white;
+
+    @media only screen and (min-width: 993px) {
+      display: none;
+    }
   }
 }
