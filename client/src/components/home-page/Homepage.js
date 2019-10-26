@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProjectSearchbar from 'components/ProjectSearchbar';
+import ProjectSearchbar from 'components/home-page/ProjectSearchbar';
 
 const HomePage = () => (
   <div className="container homepage">
