@@ -5,27 +5,21 @@ const ProjectSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const history = useHistory();
 
-  const search = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     history.push(`/issues/${searchTerm}`);
   };
 
-  const searchOnEnterPress = e => {
-    if (e.key === 'Enter') {
-      search();
-    }
-  };
-
   return (
-    <>
+    <form onSubmit={handleSubmit}>
       <input
         onChange={e => setSearchTerm(e.target.value)}
-        onKeyPress={searchOnEnterPress}
         placeholder="Search for a project...."
         type="text"
         value={searchTerm}
       />
-      <button onClick={search}>Search</button>
-    </>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 
