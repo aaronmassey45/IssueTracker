@@ -12,12 +12,16 @@ const ProjectSearch = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        onChange={e => setSearchTerm(e.target.value)}
-        placeholder="Search for a project...."
-        type="text"
-        value={searchTerm}
-      />
+      <div className="input-field">
+        <input
+          id="searchbar"
+          onChange={e => setSearchTerm(e.target.value)}
+          type="text"
+          value={searchTerm}
+        />
+        <label htmlFor="searchbar">Search for a project</label>
+      </div>
+
       <button type="submit">Search</button>
     </form>
   );
