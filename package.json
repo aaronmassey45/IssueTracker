@@ -6,7 +6,7 @@
   "author": "Aaron Massey",
   "license": "MIT",
   "scripts": {
-    "dev": "npm-run-all -p run-server run-client",
+    "dev": "npm-run-all -p dev-server dev-client",
     "dev-client": "npm run start --prefix client",
     "dev-server": "npm run run-dev --prefix server"
   },
