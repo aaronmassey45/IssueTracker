@@ -33,14 +33,14 @@ const ProjectSearch = () => {
           value={searchTerm}
         />
         <label htmlFor="searchbar">Search for a project</label>
-        {hasError && (
-          <span className="helper-text red-text">
-            You must enter something!
-          </span>
-        )}
+        <span className="helper-text red-text">
+          {hasError && 'You must enter something!'}
+        </span>
       </div>
 
-      <button type="submit">Search</button>
+      <button className="btn waves-effect" type="submit">
+        Search
+      </button>
     </form>
   );
 };
