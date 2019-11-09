@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import formFieldsData from 'components/issue-form/form-fields';
-import IssueFormInput from 'components/issue-form/IssueFormInput';
+import formFieldsData from 'components/project-page/issue-form/form-fields';
+import IssueFormInput from 'components/project-page/issue-form/IssueFormInput';
 
 const INITIAL_VALUES = {
   assigned_to: '',
