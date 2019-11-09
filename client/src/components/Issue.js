@@ -13,35 +13,33 @@ const Issue = ({
   open,
   status_text,
   updated_on,
-}) => {
-  return (
-    <div className={`issue ${open ? 'open' : 'closed'}`}>
-      <p className="small-text">id: {_id}</p>
-      <h3>
-        {issue_title} - ({open ? 'open' : 'closed'})
-      </h3>
-      <br />
-      <div>{issue_text}</div>
-      <div>{status_text}</div>
-      <br />
-      <p className="small-text">
-        <b>Created by:</b> {created_by} <b>Assigned to:</b> {assigned_to}
-      </p>
-      <p className="small-text">
-        <b>Created on:</b> {created_on} <b>Last updated:</b>{' '}
-        {updated_on ? updated_on : 'Never'}
-      </p>
-      <p className="small-text">
-        <span className="clickable" onClick={() => closeIssue(_id)}>
-          close?
-        </span>{' '}
-        <span className="clickable" onClick={() => deleteIssue(_id)}>
-          delete?
-        </span>
-      </p>
-    </div>
-  );
-};
+}) => (
+  <div className={`issue ${open ? 'open' : 'closed'}`}>
+    <p className="small-text">id: {_id}</p>
+    <h3>
+      {issue_title} - ({open ? 'open' : 'closed'})
+    </h3>
+    <br />
+    <div>{issue_text}</div>
+    <div>{status_text}</div>
+    <br />
+    <p className="small-text">
+      <b>Created by:</b> {created_by} <b>Assigned to:</b> {assigned_to}
+    </p>
+    <p className="small-text">
+      <b>Created on:</b> {created_on} <b>Last updated:</b>{' '}
+      {updated_on ? updated_on : 'Never'}
+    </p>
+    <p className="small-text">
+      <span className="clickable" onClick={() => closeIssue(_id)}>
+        close?
+      </span>{' '}
+      <span className="clickable" onClick={() => deleteIssue(_id)}>
+        delete?
+      </span>
+    </p>
+  </div>
+);
 
 Issue.defaultProps = {
   updated_on: null,
