@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import Issue from 'components/Issue';
-import IssueForm from 'components/issue-form';
+import IssueForm from 'components/project-page/issue-form';
 import useAPI from 'custom-hooks/useAPI';
 
 const Project = () => {
